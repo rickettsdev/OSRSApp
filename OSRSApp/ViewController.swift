@@ -12,11 +12,13 @@ class ViewController: UIViewController {
 
     var viewModel: ViewModel?
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+        searchBar.delegate = self
         registerNibs()
         self.viewModel = ViewModel(using: self)
         // Do any additional setup after loading the view, typically from a nib.

@@ -105,7 +105,7 @@ public class ViewModel: NSObject {
     
     public func searchForItems(searchString: String?) {
         
-        guard let searchString = searchString else {
+        guard let searchString = searchString?.lowercased() else {
             return
         }
         

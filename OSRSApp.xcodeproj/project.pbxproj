@@ -20,6 +20,7 @@
 		220FF88A21F62703006BF972 /* ViewController+UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220FF88921F62703006BF972 /* ViewController+UITableView.swift */; };
 		220FF8AB21F62A17006BF972 /* OSRSItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220FF8AA21F62A17006BF972 /* OSRSItemCell.swift */; };
 		220FF8AD21F62A25006BF972 /* OSRSItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 220FF8AC21F62A25006BF972 /* OSRSItemCell.xib */; };
+		22D6E57921F9549000F597DD /* ViewController+UISearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D6E57821F9549000F597DD /* ViewController+UISearchBar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		220FF88921F62703006BF972 /* ViewController+UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+UITableView.swift"; sourceTree = "<group>"; };
 		220FF8AA21F62A17006BF972 /* OSRSItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSRSItemCell.swift; sourceTree = "<group>"; };
 		220FF8AC21F62A25006BF972 /* OSRSItemCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OSRSItemCell.xib; sourceTree = "<group>"; };
+		22D6E57821F9549000F597DD /* ViewController+UISearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+UISearchBar.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +84,7 @@
 				220FF87321F4F309006BF972 /* Info.plist */,
 				220FF87D21F50118006BF972 /* DataManager.swift */,
 				220FF88921F62703006BF972 /* ViewController+UITableView.swift */,
+				22D6E57821F9549000F597DD /* ViewController+UISearchBar.swift */,
 			);
 			path = OSRSApp;
 			sourceTree = "<group>";
@@ -194,6 +197,7 @@
 			files = (
 				220FF88321F5031F006BF972 /* ViewModel.swift in Sources */,
 				220FF8AB21F62A17006BF972 /* OSRSItemCell.swift in Sources */,
+				22D6E57921F9549000F597DD /* ViewController+UISearchBar.swift in Sources */,
 				220FF88521F61AEC006BF972 /* OSRSItemList.swift in Sources */,
 				220FF86A21F4F308006BF972 /* ViewController.swift in Sources */,
 				220FF87E21F50118006BF972 /* DataManager.swift in Sources */,
