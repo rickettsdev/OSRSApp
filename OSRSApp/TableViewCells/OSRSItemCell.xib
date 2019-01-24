@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="144" id="vQE-3c-ETU" customClass="OSRSItemCell" customModule="OSRSApp" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="377" height="144"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="vQE-3c-ETU" id="Zfp-N3-5Bq">
+                <rect key="frame" x="0.0" y="0.0" width="377" height="143.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ImA-AE-CQ0">
+                        <rect key="frame" x="4" y="4" width="75" height="75"/>
+                        <accessibility key="accessibilityConfiguration">
+                            <accessibilityTraits key="traits" image="YES" notEnabled="YES"/>
+                        </accessibility>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="75" id="jvV-rn-7Dh"/>
+                            <constraint firstAttribute="width" constant="75" id="jxO-9v-BfB"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rHH-w9-IuJ">
+                        <rect key="frame" x="99" y="16" width="257" height="20.5"/>
+                        <accessibility key="accessibilityConfiguration">
+                            <accessibilityTraits key="traits" staticText="YES" notEnabled="YES"/>
+                        </accessibility>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="De" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jud-4v-gdB">
+                        <rect key="frame" x="99" y="56.5" width="257" height="20.5"/>
+                        <accessibility key="accessibilityConfiguration">
+                            <accessibilityTraits key="traits" staticText="YES" notEnabled="YES"/>
+                        </accessibility>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="ImA-AE-CQ0" firstAttribute="top" secondItem="Zfp-N3-5Bq" secondAttribute="top" constant="4" id="3Bi-ni-cBP"/>
+                    <constraint firstItem="jud-4v-gdB" firstAttribute="leading" secondItem="ImA-AE-CQ0" secondAttribute="trailing" constant="20" id="41y-pw-4wh"/>
+                    <constraint firstItem="rHH-w9-IuJ" firstAttribute="top" secondItem="Zfp-N3-5Bq" secondAttribute="topMargin" constant="5" id="52z-ag-8bJ"/>
+                    <constraint firstItem="ImA-AE-CQ0" firstAttribute="leading" secondItem="Zfp-N3-5Bq" secondAttribute="leading" constant="4" id="9tA-ew-Pk2"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="jud-4v-gdB" secondAttribute="trailing" constant="5" id="J6e-GY-bcg"/>
+                    <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="jud-4v-gdB" secondAttribute="bottom" constant="5" id="OPZ-pp-0rZ"/>
+                    <constraint firstItem="rHH-w9-IuJ" firstAttribute="leading" secondItem="ImA-AE-CQ0" secondAttribute="trailing" constant="20" id="Ycq-I1-5jz"/>
+                    <constraint firstItem="jud-4v-gdB" firstAttribute="top" secondItem="rHH-w9-IuJ" secondAttribute="bottom" constant="20" id="Ymj-ap-V9q"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="rHH-w9-IuJ" secondAttribute="trailing" constant="5" id="cIk-4n-9Tb"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <accessibility key="accessibilityConfiguration">
+                <accessibilityTraits key="traits" notEnabled="YES"/>
+            </accessibility>
+            <connections>
+                <outlet property="itemDetails" destination="jud-4v-gdB" id="HJQ-uM-QdD"/>
+                <outlet property="itemImage" destination="ImA-AE-CQ0" id="77a-Yb-dft"/>
+                <outlet property="itemTitle" destination="rHH-w9-IuJ" id="Uii-rL-ahG"/>
+            </connections>
+            <point key="canvasLocation" x="151.19999999999999" y="35.982008995502248"/>
+        </tableViewCell>
+    </objects>
+</document>

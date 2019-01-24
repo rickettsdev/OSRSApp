@@ -12,6 +12,14 @@
 		220FF86D21F4F308006BF972 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 220FF86B21F4F308006BF972 /* Main.storyboard */; };
 		220FF86F21F4F309006BF972 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 220FF86E21F4F309006BF972 /* Assets.xcassets */; };
 		220FF87221F4F309006BF972 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 220FF87021F4F309006BF972 /* LaunchScreen.storyboard */; };
+		220FF87C21F4F5DD006BF972 /* OSRSItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220FF87B21F4F5DD006BF972 /* OSRSItem.swift */; };
+		220FF87E21F50118006BF972 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220FF87D21F50118006BF972 /* DataManager.swift */; };
+		220FF88321F5031F006BF972 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220FF88221F5031F006BF972 /* ViewModel.swift */; };
+		220FF88521F61AEC006BF972 /* OSRSItemList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220FF88421F61AEC006BF972 /* OSRSItemList.swift */; };
+		220FF88821F61D91006BF972 /* DataFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220FF88721F61D91006BF972 /* DataFormatter.swift */; };
+		220FF88A21F62703006BF972 /* ViewController+UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220FF88921F62703006BF972 /* ViewController+UITableView.swift */; };
+		220FF8AB21F62A17006BF972 /* OSRSItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220FF8AA21F62A17006BF972 /* OSRSItemCell.swift */; };
+		220FF8AD21F62A25006BF972 /* OSRSItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 220FF8AC21F62A25006BF972 /* OSRSItemCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +30,14 @@
 		220FF86E21F4F309006BF972 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		220FF87121F4F309006BF972 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		220FF87321F4F309006BF972 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		220FF87B21F4F5DD006BF972 /* OSRSItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSRSItem.swift; sourceTree = "<group>"; };
+		220FF87D21F50118006BF972 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		220FF88221F5031F006BF972 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		220FF88421F61AEC006BF972 /* OSRSItemList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSRSItemList.swift; sourceTree = "<group>"; };
+		220FF88721F61D91006BF972 /* DataFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFormatter.swift; sourceTree = "<group>"; };
+		220FF88921F62703006BF972 /* ViewController+UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+UITableView.swift"; sourceTree = "<group>"; };
+		220FF8AA21F62A17006BF972 /* OSRSItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSRSItemCell.swift; sourceTree = "<group>"; };
+		220FF8AC21F62A25006BF972 /* OSRSItemCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OSRSItemCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,14 +70,54 @@
 		220FF86621F4F308006BF972 /* OSRSApp */ = {
 			isa = PBXGroup;
 			children = (
+				220FF8A921F629FA006BF972 /* TableViewCells */,
+				220FF88621F61D5A006BF972 /* Auxiliary */,
+				220FF88121F50312006BF972 /* ViewModel */,
+				220FF87921F4F590006BF972 /* Model */,
 				220FF86721F4F308006BF972 /* AppDelegate.swift */,
 				220FF86921F4F308006BF972 /* ViewController.swift */,
 				220FF86B21F4F308006BF972 /* Main.storyboard */,
 				220FF86E21F4F309006BF972 /* Assets.xcassets */,
 				220FF87021F4F309006BF972 /* LaunchScreen.storyboard */,
 				220FF87321F4F309006BF972 /* Info.plist */,
+				220FF87D21F50118006BF972 /* DataManager.swift */,
+				220FF88921F62703006BF972 /* ViewController+UITableView.swift */,
 			);
 			path = OSRSApp;
+			sourceTree = "<group>";
+		};
+		220FF87921F4F590006BF972 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				220FF87B21F4F5DD006BF972 /* OSRSItem.swift */,
+				220FF88421F61AEC006BF972 /* OSRSItemList.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		220FF88121F50312006BF972 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				220FF88221F5031F006BF972 /* ViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		220FF88621F61D5A006BF972 /* Auxiliary */ = {
+			isa = PBXGroup;
+			children = (
+				220FF88721F61D91006BF972 /* DataFormatter.swift */,
+			);
+			path = Auxiliary;
+			sourceTree = "<group>";
+		};
+		220FF8A921F629FA006BF972 /* TableViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				220FF8AA21F62A17006BF972 /* OSRSItemCell.swift */,
+				220FF8AC21F62A25006BF972 /* OSRSItemCell.xib */,
+			);
+			path = TableViewCells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -125,6 +181,7 @@
 				220FF87221F4F309006BF972 /* LaunchScreen.storyboard in Resources */,
 				220FF86F21F4F309006BF972 /* Assets.xcassets in Resources */,
 				220FF86D21F4F308006BF972 /* Main.storyboard in Resources */,
+				220FF8AD21F62A25006BF972 /* OSRSItemCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -135,8 +192,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				220FF88321F5031F006BF972 /* ViewModel.swift in Sources */,
+				220FF8AB21F62A17006BF972 /* OSRSItemCell.swift in Sources */,
+				220FF88521F61AEC006BF972 /* OSRSItemList.swift in Sources */,
 				220FF86A21F4F308006BF972 /* ViewController.swift in Sources */,
+				220FF87E21F50118006BF972 /* DataManager.swift in Sources */,
+				220FF88A21F62703006BF972 /* ViewController+UITableView.swift in Sources */,
+				220FF88821F61D91006BF972 /* DataFormatter.swift in Sources */,
 				220FF86821F4F308006BF972 /* AppDelegate.swift in Sources */,
+				220FF87C21F4F5DD006BF972 /* OSRSItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -282,8 +346,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = AG7UC6MB45;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = OSRSApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -291,6 +355,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tom.OSRSApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -300,8 +365,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = AG7UC6MB45;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = OSRSApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -309,6 +374,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tom.OSRSApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
