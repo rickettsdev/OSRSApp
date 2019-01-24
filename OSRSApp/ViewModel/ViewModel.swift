@@ -39,9 +39,7 @@ public class OSRSItemViewModel: NSObject {
     var largeIconNeedsUpdate: Bool = true
     private var _largeIcon: Data? {
         didSet {
-            DispatchQueue.main.async { [weak self] in
-                self?.delegate?.viewModelUpdated()
-            }
+            self.delegate?.viewModelUpdated()
         }
     }
     
