@@ -16,10 +16,17 @@ public struct CellNibNames {
 
 extension ViewController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel?.osrsItemViewModelList?.count ?? 0
+        return viewModel?.itemCount ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        guard !isLoadingCell(indexPath: indexPath) else {
+            let cell = UITableViewCell()
+            cell.backgroundColor = .red
+            return cell
+        }
+        
         guard let itemCell = tableView.dequeueReusableCell(withIdentifier: CellNibNames.OSRSItemCell, for: indexPath) as? OSRSItemCell else {
             return UITableViewCell()
         }
@@ -49,5 +56,27 @@ extension ViewController : UITableViewDelegate, UITableViewDataSource {
         let verticalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|[detailView]|", options: NSLayoutConstraint.FormatOptions.alignAllCenterX, metrics: nil, views: views)
         NSLayoutConstraint.activate(horizontalConstraints)
         NSLayoutConstraint.activate(verticalConstraints)
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard self.viewModel?.itemCount ?? 0 != 0 else {
+            return
+        }
+        let offset = scrollView.contentOffset
+        let bounds = scrollView.bounds
+        let size = scrollView.contentSize
+        let inset = scrollView.contentInset
+        let y = offset.y + bounds.size.height + inset.bottom
+        let h = size.height
+        let reloadDistance = CGFloat(10.0)
+        if y > h + reloadDistance {
+            self.viewModel?.reloadCellState = .active
+        }
+    }
+    func isLoadingCell(indexPath: IndexPath) -> Bool {
+        guard let itemCount = viewModel?.osrsItemViewModelList?.count else {
+            return false
+        }
+        return itemCount == indexPath.row
     }
 }

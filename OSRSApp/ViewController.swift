@@ -14,6 +14,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     
+    // TODO: Look into making custom tableview class
+    
     weak var presentedDetailView: OSRSItemDetailView?
     
     override func viewDidLoad() {
@@ -34,9 +36,12 @@ class ViewController: UIViewController {
 extension ViewController : ViewModelItemsReceived {
     func osrsItemsReceived() {
         // reload tableview
+        self.viewModel?.osrsItemViewModelList?.forEach({(element) in element.delegate = self })
+        self.tableView?.reloadData()
+    }
+    func prepareForNewSearchString() {
         DispatchQueue.main.async { [weak self] in
-            self?.viewModel?.osrsItemViewModelList?.forEach({(element) in element.delegate = self })
-            self?.tableView?.reloadData()
+            self?.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
         }
     }
 }

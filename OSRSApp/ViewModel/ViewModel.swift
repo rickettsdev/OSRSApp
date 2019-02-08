@@ -15,6 +15,11 @@ protocol OSRSViewModelUpdated: class {
     func itemPriceDataReceived(for id: Int?)
 }
 
+enum ReloadCellState: Int {
+    case active
+    case inactive
+}
+
 public class OSRSItemViewModel: NSObject {
     var item: OSRSItem?
     weak var delegate: OSRSViewModelUpdated?
@@ -120,14 +125,51 @@ public class OSRSItemViewModel: NSObject {
 //meant to be implemented by viewcontroller
 public protocol ViewModelItemsReceived: class {
     func osrsItemsReceived()
+    func prepareForNewSearchString()
 }
 
 public class ViewModel: NSObject {
     weak var delegate: ViewModelItemsReceived?
-    var itemCount: Int?
+    var previousSearchString: String?
+    
+    private var _pageNumber: Int = 1
+    var pageNumber: Int {
+        get {
+            _pageNumber = _pageNumber + 1
+            return _pageNumber - 1
+        }
+    }
+    
+    var itemCount: Int {
+        get {
+            guard let modeListCount = self.osrsItemViewModelList?.count else {
+                return 0
+            }
+            
+            let itemCount = self.reloadCellState == .active ? modeListCount + 1 : modeListCount
+            
+            return itemCount
+        }
+    }
+    
+    var reloadCellState: ReloadCellState = .inactive {
+        didSet {
+            
+            guard let searchString = self.previousSearchString else {
+                return
+            }
+            
+            if reloadCellState == .active && oldValue == .inactive {
+                self.searchForItems(searchString: searchString)
+            }
+        }
+    }
     var osrsItemViewModelList: [OSRSItemViewModel]? {
         didSet {
-            delegate?.osrsItemsReceived()
+            DispatchQueue.main.async { [weak self] in
+                self?.reloadCellState = .inactive
+                self?.delegate?.osrsItemsReceived()
+            }
         }
     }
     
@@ -142,12 +184,39 @@ public class ViewModel: NSObject {
             return
         }
         
-        DataManager.getOSRSItems(searchString: searchString, completion: { [weak self] (model) in
+        self.previousSearchString = searchString
+        
+        if self.reloadCellState == .inactive {
+            self.resetPageNumber()
+        }
+        
+        if self.itemCount > 0 && self.onlyShowingFirstPage(){
+            self.delegate?.prepareForNewSearchString()
+        }
+        
+        DataManager.getOSRSItems(searchString: searchString, page: self.pageNumber, completion: { [weak self] (model) in
             guard let model = model else {
                 return
             }
-            self?.itemCount = model.total
-            self?.osrsItemViewModelList = model.items.map({ (item) in return OSRSItemViewModel(item: item) })
+            
+            let newViewModels = model.items.map({ (item) in return OSRSItemViewModel(item: item) })
+            
+            guard let currentItemViewModelListCopy = self?.osrsItemViewModelList else {
+                self?.osrsItemViewModelList = newViewModels
+                return
+            }
+            
+            var itemViewModelList = (self?.reloadCellState == ReloadCellState.active ? currentItemViewModelListCopy : [])
+            
+            itemViewModelList.append(contentsOf: newViewModels)
+        
+            self?.osrsItemViewModelList = itemViewModelList
         })
+    }
+    func resetPageNumber() {
+        self._pageNumber = 1
+    }
+    func onlyShowingFirstPage() -> Bool {
+        return self._pageNumber == 1
     }
 }

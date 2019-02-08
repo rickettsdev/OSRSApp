@@ -15,12 +15,14 @@ public class DataManager {
         }).resume()
     }
     
-    class func getOSRSItems(searchString: String, completion: @escaping (OSRSItemList?)->()) {
-        let urlString = "http://services.runescape.com/m=itemdb_oldschool/api/catalogue/items.json?category=1&alpha=\(searchString)&page=1"
+    class func getOSRSItems(searchString: String, page: Int ,completion: @escaping (OSRSItemList?)->()) {
+        let urlString = "http://services.runescape.com/m=itemdb_oldschool/api/catalogue/items.json?category=1&alpha=\(searchString)&page=\(page)"
         guard let url = URL(string: urlString) else {
             completion(nil)
             return
         }
+        
+        print("\(urlString)")
         
         DataManager.callService(with: url, completion: { (data) in
             guard let dataDictionary = DataFormatter.dataToJSONDictionary(data: data) else {
