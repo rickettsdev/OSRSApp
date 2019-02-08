@@ -14,6 +14,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     
+    weak var presentedDetailView: OSRSItemDetailView?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
@@ -25,9 +27,8 @@ class ViewController: UIViewController {
     }
 
     func registerNibs() {
-        tableView.register(UINib(nibName: "OSRSItemCell", bundle: nil), forCellReuseIdentifier: "OSRSItemCellID")
+        tableView.register(UINib(nibName: "OSRSItemCell", bundle: nil), forCellReuseIdentifier: CellNibNames.OSRSItemCell)
     }
-
 }
 
 extension ViewController : ViewModelItemsReceived {
@@ -37,6 +38,30 @@ extension ViewController : ViewModelItemsReceived {
             self?.viewModel?.osrsItemViewModelList?.forEach({(element) in element.delegate = self })
             self?.tableView?.reloadData()
         }
+    }
+}
+
+extension ViewController : OSRSViewModelUpdated {
+    func viewModelUpdated() {
+        DispatchQueue.main.async { [weak self] in
+            self?.tableView.reloadData()
+        }
+    }
+    func presentedViewImageUpdated() {
+        DispatchQueue.main.async { [weak self] in
+            self?.presentedDetailView?.loadLargeIconImage()
+        }
+    }
+    func itemPriceDataReceived(for id: Int?) {
+        guard let id = id else {
+            return
+        }
+        
+        guard self.presentedDetailView?.itemViewModel?.item?.id == id else {
+            return
+        }
+        // TODO: Reload graph since data has arrived.
+        
     }
 }
 

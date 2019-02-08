@@ -32,4 +32,20 @@ public class DataManager {
             completion(itemModelList)
         })
     }
+    
+    class func getGraphData(for itemID: Int, completion: @escaping (OSRSItemPriceData?)->()) {
+        let urlString = "http://services.runescape.com/m=itemdb_oldschool/api/graph/\(itemID).json"
+        guard let url = URL(string: urlString) else {
+            completion(nil)
+            return
+        }
+        DataManager.callService(with: url, completion: { (data) in
+            guard let dataDictionary = DataFormatter.dataToJSONDictionary(data: data) else {
+                completion(nil)
+                return
+            }
+            let dataPointsModel = OSRSItemPriceData(priceDataDictionary: dataDictionary)
+            completion(dataPointsModel)
+        })
+    }
 }

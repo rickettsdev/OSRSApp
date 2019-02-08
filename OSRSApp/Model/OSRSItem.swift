@@ -58,7 +58,7 @@ public class OSRSItem: NSObject {
     }
 }
 
-public enum ValueTrend {
+public enum ValueTrend: String {
     case negative
     case neutral
     case positive

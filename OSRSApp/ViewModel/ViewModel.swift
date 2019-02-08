@@ -11,11 +11,32 @@ import Foundation
 // Meant to be implemented by the tableviewcell
 protocol OSRSViewModelUpdated: class {
     func viewModelUpdated()
+    func presentedViewImageUpdated()
+    func itemPriceDataReceived(for id: Int?)
 }
 
 public class OSRSItemViewModel: NSObject {
     var item: OSRSItem?
     weak var delegate: OSRSViewModelUpdated?
+    
+    var priceDataNeedsUpdate: Bool = true
+    
+    private var _priceDataPoints: OSRSItemPriceData? {
+        didSet {
+            self.delegate?.itemPriceDataReceived(for: self.item?.id)
+        }
+    }
+    
+    var priceDataPoints: OSRSItemPriceData? {
+        get {
+            guard _priceDataPoints != nil && self.priceDataNeedsUpdate == false else {
+                self.priceDataNeedsUpdate = false
+                getPriceDataPoints()
+                return nil
+            }
+            return _priceDataPoints
+        }
+    }
     
     var smallIconNeedsUpdate: Bool = true
     
@@ -39,13 +60,13 @@ public class OSRSItemViewModel: NSObject {
     var largeIconNeedsUpdate: Bool = true
     private var _largeIcon: Data? {
         didSet {
-            self.delegate?.viewModelUpdated()
+            self.delegate?.presentedViewImageUpdated()
         }
     }
     
     var largeIcon: Data? {
         get {
-            guard _largeIcon != nil, self.largeIconNeedsUpdate == true else {
+            guard _largeIcon != nil && self.largeIconNeedsUpdate == false else {
                 self.largeIconNeedsUpdate = false
                 getLargeIconData()
                 return nil
@@ -64,6 +85,7 @@ public class OSRSItemViewModel: NSObject {
         }
         DataManager.callService(with: url, completion: { [weak self] (data) in
             guard let data = data else {
+                self?.smallIconNeedsUpdate = true
                 return
             }
             self?._smallIcon = data
@@ -75,9 +97,22 @@ public class OSRSItemViewModel: NSObject {
         }
         DataManager.callService(with: url, completion: { [weak self] (data) in
             guard let data = data else {
+                self?.largeIconNeedsUpdate = true
                 return
             }
             self?._largeIcon = data
+        })
+    }
+    private func getPriceDataPoints() {
+        guard let id = self.item?.id else {
+            return
+        }
+        DataManager.getGraphData(for: id, completion: { [weak self] (dataPointModel) in
+            guard let dataPointModel = dataPointModel else {
+                self?.priceDataNeedsUpdate = true
+                return
+            }
+            self?._priceDataPoints = dataPointModel
         })
     }
 }
