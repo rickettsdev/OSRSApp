@@ -40,7 +40,6 @@ class OSRSItemDetailView: UIView {
         
         self.cancelButton.setTitle("Back", for: .normal)
         self.cancelButton.setTitleColor(.red, for: .normal)
-        self.cancelButton.titleEdgeInsets = UIEdgeInsets(top: -15.0, left: -15.0, bottom: -15.0, right: -15.0)
         self.cancelButton.addTarget(self, action: #selector(cancelAction), for: .touchUpInside)
         self.cancelButton.setNeedsLayout()
         self.cancelButton.layoutIfNeeded()
