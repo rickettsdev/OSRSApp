@@ -195,7 +195,7 @@ public class ViewModel: NSObject {
         }
         
         DataManager.getOSRSItems(searchString: searchString, page: self.pageNumber, completion: { [weak self] (model) in
-            guard let model = model else {
+            guard let model = model, model.items.count > 0 else {
                 return
             }
             
