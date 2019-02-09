@@ -68,7 +68,7 @@ extension ViewController : UITableViewDelegate, UITableViewDataSource {
         let inset = scrollView.contentInset
         let y = offset.y + bounds.size.height + inset.bottom
         let h = size.height
-        let reloadDistance = CGFloat(10.0)
+        let reloadDistance = CGFloat(30.0)
         if y > h + reloadDistance {
             self.tableView.isUserInteractionEnabled = false
             self.tableView.isScrollEnabled = false

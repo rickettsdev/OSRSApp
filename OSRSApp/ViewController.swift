@@ -71,6 +71,7 @@ extension ViewController : ViewModelItemsReceived {
         self.tableView.beginUpdates()
         self.tableView.insertRows(at: [index], with: .bottom)
         self.tableView.endUpdates()
+        self.tableView.scrollToRow(at: index, at: .bottom, animated: true)
         self.tableView.reloadData()
     }
     func itemsWereNotReceived() {
