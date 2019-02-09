@@ -70,6 +70,8 @@ extension ViewController : UITableViewDelegate, UITableViewDataSource {
         let h = size.height
         let reloadDistance = CGFloat(10.0)
         if y > h + reloadDistance {
+            self.tableView.isUserInteractionEnabled = false
+            self.tableView.isScrollEnabled = false
             self.viewModel?.reloadCellState = .active
         }
     }

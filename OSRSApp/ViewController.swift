@@ -31,18 +31,50 @@ class ViewController: UIViewController {
     func registerNibs() {
         tableView.register(UINib(nibName: "OSRSItemCell", bundle: nil), forCellReuseIdentifier: CellNibNames.OSRSItemCell)
     }
+    func removeLoadingCellIfNeeded() {
+        DispatchQueue.main.async { [unowned self] in
+            let numberOfCells = self.tableView.numberOfRows(inSection: 0)
+            if numberOfCells > self.viewModel!.osrsItemViewModelList!.count {
+                let lastCellIndex = IndexPath(row: (numberOfCells-1), section: 0)
+                self.tableView.beginUpdates()
+                self.tableView.deleteRows(at: [lastCellIndex], with: .fade)
+                self.tableView.endUpdates()
+                self.tableView.scrollToRow(at: IndexPath(row: numberOfCells-2, section: 0), at: .bottom, animated: true)
+            }
+            
+            self.tableView.isUserInteractionEnabled = true
+            self.tableView.isScrollEnabled = true
+        }
+    }
 }
 
 extension ViewController : ViewModelItemsReceived {
     func osrsItemsReceived() {
         // reload tableview
         self.viewModel?.osrsItemViewModelList?.forEach({(element) in element.delegate = self })
+        self.removeLoadingCellIfNeeded()
         self.tableView?.reloadData()
     }
     func prepareForNewSearchString() {
         DispatchQueue.main.async { [weak self] in
             self?.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
         }
+    }
+    func prepareForAdditionalItems() {
+        guard
+            let row = self.viewModel?.itemCount,
+            let itemCount = self.viewModel?.osrsItemViewModelList?.count,
+            itemCount < row else {
+            return
+        }
+        let index = IndexPath(row: row-1, section: 0)
+        self.tableView.beginUpdates()
+        self.tableView.insertRows(at: [index], with: .bottom)
+        self.tableView.endUpdates()
+        self.tableView.reloadData()
+    }
+    func itemsWereNotReceived() {
+        self.removeLoadingCellIfNeeded()
     }
 }
 

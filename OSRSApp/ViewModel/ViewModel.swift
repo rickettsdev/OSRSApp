@@ -126,6 +126,8 @@ public class OSRSItemViewModel: NSObject {
 public protocol ViewModelItemsReceived: class {
     func osrsItemsReceived()
     func prepareForNewSearchString()
+    func prepareForAdditionalItems()
+    func itemsWereNotReceived()
 }
 
 public class ViewModel: NSObject {
@@ -160,7 +162,10 @@ public class ViewModel: NSObject {
             }
             
             if reloadCellState == .active && oldValue == .inactive {
-                self.searchForItems(searchString: searchString)
+                DispatchQueue.main.async { [weak self] in
+                    self?.delegate?.prepareForAdditionalItems()
+                    self?.searchForItems(searchString: searchString)
+                }
             }
         }
     }
@@ -196,6 +201,8 @@ public class ViewModel: NSObject {
         
         DataManager.getOSRSItems(searchString: searchString, page: self.pageNumber, completion: { [weak self] (model) in
             guard let model = model, model.items.count > 0 else {
+                self?.delegate?.itemsWereNotReceived()
+                self?.reloadCellState = .inactive
                 return
             }
             
