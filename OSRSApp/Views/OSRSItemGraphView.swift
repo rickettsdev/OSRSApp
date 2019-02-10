@@ -25,34 +25,31 @@ public class OSRSItemGraphView: UIView {
         super.awakeFromNib()
     }
     
+    var graphViewModel: OSRSItemGraphViewModel?
+    
     func generate(with data: OSRSItemPriceData) {
+        self.graphViewModel = OSRSItemGraphViewModel(data)
         guard data.priceDataPoints.count > 0 && data.priceDataPointsAverage.count > 0 else {
             return
         }
-        let averageDataPointsByDate = data.priceDataPointsAverage
-        // TODO: Need to move this to a viewmodel
-        let averageDataPointsByPrice = data.priceDataPointsAverage.sorted {
-            return $0.price! < $1.price!
-        }
-        let maxPrice = averageDataPointsByPrice.last!
-        let cheapestPrice = averageDataPointsByPrice.first!
         
-        if let cheapest = cheapestPrice.price {
-            self.minPrice.text = "\(cheapest)"
-        }
-        if let max = maxPrice.price {
-            self.maxPrice.text = "\(max)"
+        guard let maxPrice = self.graphViewModel?.highestAveragePrice?.price,
+            let cheapestPrice = self.graphViewModel?.cheapestAveragePrice?.price,
+            let itemCount = self.graphViewModel?.averageDataPointsByPrice.count
+            else {
+                return
         }
         
-        let totalRange = CGFloat((maxPrice.price! - cheapestPrice.price!))
+        self.minPrice.text = "\(cheapestPrice)"
+        self.maxPrice.text = "\(maxPrice)"
         
-        for (index, dataPoint) in averageDataPointsByDate.enumerated() {
-            let xPosition = GraphConstants.INITIAL_DISTANCE_FROM_X_AXIS + (CGFloat((index)) * GraphConstants.BAR_WIDTH)
-            let priceAboveLowest = dataPoint.price! - cheapestPrice.price!
-            let ratio = CGFloat(priceAboveLowest) / totalRange
-            let height = ratio * GraphConstants.MAX_HEIGHT
-            guard CGFloat(xPosition) < self.bounds.width else {
-                break
+
+        
+        for index in 0..<itemCount {
+            guard let xPosition = self.graphViewModel?.getDistanceFromYAxis(at: index),
+                let height = self.graphViewModel?.getAveragePriceBarHeight(for: index)
+                else {
+                    continue
             }
             addBarToGraph(xPosition: xPosition, height: height)
         }
@@ -62,7 +59,13 @@ public class OSRSItemGraphView: UIView {
         self.layoutIfNeeded()
     }
     
-    private func addBarToGraph(xPosition: CGFloat, height: CGFloat) {
+    private func addBarToGraph(xPosition: Int, height: Int) {
+        guard let width = self.graphViewModel?.barWidth else {
+            return
+        }
+        let xPosition = CGFloat(xPosition)
+        let height = CGFloat(height)
+        let barWidth = CGFloat(width)
         let bar = UIView(frame: CGRect.zero)
         bar.backgroundColor = .blue
         self.addSubview(bar)
@@ -71,7 +74,7 @@ public class OSRSItemGraphView: UIView {
         NSLayoutConstraint(item: bar, attribute: .bottom, relatedBy: .equal, toItem: self.horizontalAxis, attribute: .top, multiplier: 1, constant: 0).isActive = true
         NSLayoutConstraint(item: bar, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: height).isActive = true
         NSLayoutConstraint(item: bar, attribute: .leading, relatedBy: .equal, toItem: self.verticalAxis, attribute: .trailing, multiplier: 1, constant: xPosition).isActive = true
-        NSLayoutConstraint(item: bar, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: CGFloat(GraphConstants.BAR_WIDTH)).isActive = true
+        NSLayoutConstraint(item: bar, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: barWidth).isActive = true
     }
     
 }
