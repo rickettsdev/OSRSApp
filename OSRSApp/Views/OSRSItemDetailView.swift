@@ -15,6 +15,7 @@ class OSRSItemDetailView: UIView {
     @IBOutlet weak var itemDescription: UILabel!
     @IBOutlet weak var priceTrend: UILabel!
     @IBOutlet weak var cancelButton: UIButton!
+    @IBOutlet weak var graphView: UIView!
     
     var itemViewModel: OSRSItemViewModel? {
         didSet {
@@ -46,9 +47,6 @@ class OSRSItemDetailView: UIView {
         
         loadLargeIconImage()
         
-        if let itemImageData = itemViewModel?.priceDataPoints {
-            createGraph(using: itemImageData)
-        }
         if let title = itemViewModel?.item?.name {
             self.title.text = title
         }
@@ -57,6 +55,14 @@ class OSRSItemDetailView: UIView {
         }
         if let trend = itemViewModel?.item?.current?.trend?.rawValue {
             self.priceTrend.text = trend
+        }
+        
+        DispatchQueue.main.async { [unowned self] in
+            if let graphView = Bundle(for: OSRSItemGraphView.self).loadNibNamed("OSRSItemGraphView", owner: self, options: nil)?.first as? OSRSItemGraphView {
+                self.createGraph(graphView: graphView)
+            }
+            self.setNeedsLayout()
+            self.layoutIfNeeded()
         }
     }
     func loadLargeIconImage() {
@@ -67,8 +73,19 @@ class OSRSItemDetailView: UIView {
         }
     }
     
-    func createGraph(using data: OSRSItemPriceData?) {
-        print("HERE")
+    func createGraph(graphView: OSRSItemGraphView) {
+        guard let priceData = itemViewModel?.priceDataPoints else {
+            return
+        }
+        graphView.generate(with: priceData)
+        self.graphView.addSubview(graphView)
+        graphView.translatesAutoresizingMaskIntoConstraints = false
+        let views = ["graph":graphView]
+        let horizontalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|[graph]|", options: NSLayoutConstraint.FormatOptions.alignAllCenterY, metrics: nil, views: views)
+        let verticalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|[graph]|", options: NSLayoutConstraint.FormatOptions.alignAllCenterX, metrics: nil, views: views)
+        NSLayoutConstraint.activate(horizontalConstraints)
+        NSLayoutConstraint.activate(verticalConstraints)
+        
     }
     
     @objc func cancelAction(){

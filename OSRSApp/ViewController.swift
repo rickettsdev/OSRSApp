@@ -34,7 +34,7 @@ class ViewController: UIViewController {
     func removeLoadingCellIfNeeded() {
         DispatchQueue.main.async { [unowned self] in
             let numberOfCells = self.tableView.numberOfRows(inSection: 0)
-            if numberOfCells > self.viewModel!.osrsItemViewModelList!.count {
+            if numberOfCells > self.viewModel!.itemCount {
                 let lastCellIndex = IndexPath(row: (numberOfCells-1), section: 0)
                 self.tableView.beginUpdates()
                 self.tableView.deleteRows(at: [lastCellIndex], with: .fade)

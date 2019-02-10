@@ -29,6 +29,14 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9y1-AG-FX8" userLabel="graphView">
+                    <rect key="frame" x="5" y="235.5" width="200" height="200"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="200" id="fYL-QK-qWq"/>
+                        <constraint firstAttribute="width" constant="200" id="nFC-bE-AmQ"/>
+                    </constraints>
+                </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6QL-L7-JcT" userLabel="priceTrend">
                     <rect key="frame" x="88" y="195" width="42" height="20.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -50,17 +58,19 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="6QL-L7-JcT" secondAttribute="bottom" constant="20" id="0Hu-Nx-SS3"/>
+                <constraint firstItem="9y1-AG-FX8" firstAttribute="top" secondItem="6QL-L7-JcT" secondAttribute="bottom" constant="20" id="0Hu-Nx-SS3"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="NqZ-0O-63a" secondAttribute="bottom" constant="20" id="0vy-e2-hvX"/>
                 <constraint firstItem="NqZ-0O-63a" firstAttribute="leading" secondItem="d9U-Go-Ngk" secondAttribute="leading" id="4QP-5L-5YQ"/>
                 <constraint firstItem="NqZ-0O-63a" firstAttribute="top" secondItem="d9U-Go-Ngk" secondAttribute="bottom" constant="10" id="92d-vx-blH"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="bJX-vz-QJE" secondAttribute="trailing" constant="5" id="BCd-bH-ERQ"/>
+                <constraint firstItem="9y1-AG-FX8" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="5" id="ETB-nL-fjx"/>
                 <constraint firstItem="d9U-Go-Ngk" firstAttribute="top" secondItem="bJX-vz-QJE" secondAttribute="bottom" constant="5" id="NbC-b0-KCu"/>
                 <constraint firstItem="6QL-L7-JcT" firstAttribute="top" secondItem="M7r-8l-mwT" secondAttribute="bottom" constant="10" id="PdW-NY-pZ5"/>
                 <constraint firstItem="d9U-Go-Ngk" firstAttribute="leading" secondItem="M7r-8l-mwT" secondAttribute="trailing" constant="25" id="W0O-Ge-EKY"/>
                 <constraint firstItem="6QL-L7-JcT" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="4" id="WZO-XP-NGN"/>
                 <constraint firstItem="d9U-Go-Ngk" firstAttribute="top" secondItem="M7r-8l-mwT" secondAttribute="top" id="YZ6-ku-A64"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="NqZ-0O-63a" secondAttribute="trailing" constant="10" id="ZKB-eD-ZsE"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="9y1-AG-FX8" secondAttribute="bottom" constant="20" id="oES-xM-jv6"/>
                 <constraint firstItem="M7r-8l-mwT" firstAttribute="trailing" secondItem="6QL-L7-JcT" secondAttribute="trailing" id="s1x-cQ-Wfn"/>
                 <constraint firstItem="M7r-8l-mwT" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="5" id="u4R-Zr-bP2"/>
                 <constraint firstItem="bJX-vz-QJE" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="5" id="zzw-Mv-Fan"/>
@@ -69,6 +79,7 @@
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
                 <outlet property="cancelButton" destination="bJX-vz-QJE" id="vGE-wQ-jy3"/>
+                <outlet property="graphView" destination="9y1-AG-FX8" id="fB4-vE-WFH"/>
                 <outlet property="itemDescription" destination="NqZ-0O-63a" id="F83-4N-DMB"/>
                 <outlet property="itemImageView" destination="M7r-8l-mwT" id="TK8-L7-dKf"/>
                 <outlet property="priceTrend" destination="6QL-L7-JcT" id="Myk-4R-z9B"/>

@@ -20,6 +20,8 @@
 		220FF88A21F62703006BF972 /* ViewController+UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220FF88921F62703006BF972 /* ViewController+UITableView.swift */; };
 		220FF8AB21F62A17006BF972 /* OSRSItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220FF8AA21F62A17006BF972 /* OSRSItemCell.swift */; };
 		220FF8AD21F62A25006BF972 /* OSRSItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 220FF8AC21F62A25006BF972 /* OSRSItemCell.xib */; };
+		225D2B11220F7B6F003FC4C2 /* OSRSItemGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225D2B10220F7B6F003FC4C2 /* OSRSItemGraphView.swift */; };
+		225D2B13220F7C02003FC4C2 /* OSRSItemGraphView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 225D2B12220F7C02003FC4C2 /* OSRSItemGraphView.xib */; };
 		22BDC74F2206415400E84518 /* OSRSItemPriceData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BDC74E2206415400E84518 /* OSRSItemPriceData.swift */; };
 		22BDC7522206525C00E84518 /* OSRSItemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BDC7512206525C00E84518 /* OSRSItemDetailView.swift */; };
 		22BDC754220761A300E84518 /* OSRSItemDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22BDC753220761A300E84518 /* OSRSItemDetailView.xib */; };
@@ -42,6 +44,8 @@
 		220FF88921F62703006BF972 /* ViewController+UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+UITableView.swift"; sourceTree = "<group>"; };
 		220FF8AA21F62A17006BF972 /* OSRSItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSRSItemCell.swift; sourceTree = "<group>"; };
 		220FF8AC21F62A25006BF972 /* OSRSItemCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OSRSItemCell.xib; sourceTree = "<group>"; };
+		225D2B10220F7B6F003FC4C2 /* OSRSItemGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSRSItemGraphView.swift; sourceTree = "<group>"; };
+		225D2B12220F7C02003FC4C2 /* OSRSItemGraphView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OSRSItemGraphView.xib; sourceTree = "<group>"; };
 		22BDC74E2206415400E84518 /* OSRSItemPriceData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSRSItemPriceData.swift; sourceTree = "<group>"; };
 		22BDC7512206525C00E84518 /* OSRSItemDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSRSItemDetailView.swift; sourceTree = "<group>"; };
 		22BDC753220761A300E84518 /* OSRSItemDetailView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OSRSItemDetailView.xib; sourceTree = "<group>"; };
@@ -136,6 +140,8 @@
 			children = (
 				22BDC7512206525C00E84518 /* OSRSItemDetailView.swift */,
 				22BDC753220761A300E84518 /* OSRSItemDetailView.xib */,
+				225D2B10220F7B6F003FC4C2 /* OSRSItemGraphView.swift */,
+				225D2B12220F7C02003FC4C2 /* OSRSItemGraphView.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -199,6 +205,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				220FF87221F4F309006BF972 /* LaunchScreen.storyboard in Resources */,
+				225D2B13220F7C02003FC4C2 /* OSRSItemGraphView.xib in Resources */,
 				220FF86F21F4F309006BF972 /* Assets.xcassets in Resources */,
 				22BDC754220761A300E84518 /* OSRSItemDetailView.xib in Resources */,
 				220FF86D21F4F308006BF972 /* Main.storyboard in Resources */,
@@ -222,6 +229,7 @@
 				220FF88A21F62703006BF972 /* ViewController+UITableView.swift in Sources */,
 				22BDC74F2206415400E84518 /* OSRSItemPriceData.swift in Sources */,
 				220FF88821F61D91006BF972 /* DataFormatter.swift in Sources */,
+				225D2B11220F7B6F003FC4C2 /* OSRSItemGraphView.swift in Sources */,
 				220FF86821F4F308006BF972 /* AppDelegate.swift in Sources */,
 				220FF87C21F4F5DD006BF972 /* OSRSItem.swift in Sources */,
 				22BDC7522206525C00E84518 /* OSRSItemDetailView.swift in Sources */,

@@ -197,12 +197,13 @@ public class ViewModel: NSObject {
         
         if self.itemCount > 0 && self.onlyShowingFirstPage(){
             self.delegate?.prepareForNewSearchString()
+            // Need to make sure this is executed before getOSRSItems is called below.
         }
         
         DataManager.getOSRSItems(searchString: searchString, page: self.pageNumber, completion: { [weak self] (model) in
             guard let model = model, model.items.count > 0 else {
-                self?.delegate?.itemsWereNotReceived()
                 self?.reloadCellState = .inactive
+                self?.delegate?.itemsWereNotReceived()
                 return
             }
             
