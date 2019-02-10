@@ -30,11 +30,11 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9y1-AG-FX8" userLabel="graphView">
-                    <rect key="frame" x="5" y="235.5" width="200" height="200"/>
+                    <rect key="frame" x="5" y="235.5" width="220" height="200"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="200" id="fYL-QK-qWq"/>
-                        <constraint firstAttribute="width" constant="200" id="nFC-bE-AmQ"/>
+                        <constraint firstAttribute="width" constant="220" id="nFC-bE-AmQ"/>
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6QL-L7-JcT" userLabel="priceTrend">

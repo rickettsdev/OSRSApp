@@ -56,7 +56,9 @@ class OSRSItemDetailView: UIView {
         if let trend = itemViewModel?.item?.current?.trend?.rawValue {
             self.priceTrend.text = trend
         }
-        
+        self.createGraphIfPossible()
+    }
+    func createGraphIfPossible() {
         DispatchQueue.main.async { [unowned self] in
             if let graphView = Bundle(for: OSRSItemGraphView.self).loadNibNamed("OSRSItemGraphView", owner: self, options: nil)?.first as? OSRSItemGraphView {
                 self.createGraph(graphView: graphView)
@@ -74,10 +76,9 @@ class OSRSItemDetailView: UIView {
     }
     
     func createGraph(graphView: OSRSItemGraphView) {
-        guard let priceData = itemViewModel?.priceDataPoints else {
-            return
+        if let priceData = itemViewModel?.priceDataPoints {
+            graphView.generate(with: priceData)
         }
-        graphView.generate(with: priceData)
         self.graphView.addSubview(graphView)
         graphView.translatesAutoresizingMaskIntoConstraints = false
         let views = ["graph":graphView]

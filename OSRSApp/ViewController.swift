@@ -98,8 +98,7 @@ extension ViewController : OSRSViewModelUpdated {
         guard self.presentedDetailView?.itemViewModel?.item?.id == id else {
             return
         }
-        // TODO: Reload graph since data has arrived.
-        
+        self.presentedDetailView?.createGraphIfPossible()
     }
 }
 
