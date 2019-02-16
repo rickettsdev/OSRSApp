@@ -56,6 +56,15 @@ public class OSRSItem: NSObject {
             self.day180 = ItemValueChange.init(dataDictionay: day180)
         }
     }
+    
+    public func update(with newModel: OSRSItem) {
+        guard self.id == newModel.id && self.id != nil else {
+            return
+        }
+        self.day30 = newModel.day30
+        self.day90 = newModel.day90
+        self.day180 = newModel.day180
+    }
 }
 
 public enum ValueTrend: String {

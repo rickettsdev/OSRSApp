@@ -50,4 +50,24 @@ public class DataManager {
             completion(dataPointsModel)
         })
     }
+    class func updateMoreDetails(for item: inout OSRSItem, completion: @escaping (Bool)->()) {
+        guard let itemID = item.id else {
+            completion(false)
+            return
+        }
+        let urlString = "http://services.runescape.com/m=itemdb_oldschool/api/catalogue/detail.json?item=\(itemID)"
+        guard let url = URL(string: urlString) else {
+            completion(false)
+            return
+        }
+        DataManager.callService(with: url, completion: { [weak item] (data) in
+            guard let dataDictionary = DataFormatter.dataToJSONDictionary(data: data) else {
+                completion(false)
+                return
+            }
+            let newModel = OSRSItem(dataDictionary: dataDictionary)
+            item?.update(with: newModel)
+            completion(true)
+        })
+    }
 }

@@ -50,10 +50,28 @@ public class OSRSItemGraphViewModel: NSObject {
         return GraphConstants.BAR_WIDTH
     }()
     
+    
+    lazy var dateRange: String = {
+        guard let earliest = self.averageDataPointByDate.first?.epoch, let latest = self.averageDataPointByDate.last?.epoch else {
+            return ""
+        }
+        guard let earliestTime = Double(earliest), let latestTime = Double(latest) else {
+            return ""
+        }
+        let earliestDate = Date(timeIntervalSince1970: earliestTime/1000.0)
+        let latestDate = Date(timeIntervalSince1970: latestTime/1000.0)
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM-dd-yyy"
+        let earliestDateString = dateFormatter.string(from: earliestDate)
+        let latestDateString = dateFormatter.string(from: latestDate)
+        return "\(earliestDateString) - \(latestDateString)"
+    }()
+    
     func getAveragePriceBarHeight(for index: Int) -> Int? {
         
-        guard index < self.averageDataPointsByPrice.count,
-            let elementPrice = self.averageDataPointsByPrice[index].price,
+        guard index < self.averageDataPointByDate.count,
+            let elementPrice = self.averageDataPointByDate[index].price,
             let cheapest = self.cheapestAveragePrice?.price,
             let differenceInRange = self.differenceInRange
             else {
@@ -75,6 +93,27 @@ public class OSRSItemGraphViewModel: NSObject {
         
         
         return height
+    }
+    
+    func getHighestPricePoint() -> String {
+        let highest = priceAbbreviated(priceDataPoint: self.highestAveragePrice)
+        return highest
+    }
+    func getCheapestPricePoint() -> String {
+        let cheapest = priceAbbreviated(priceDataPoint: self.cheapestAveragePrice)
+        return cheapest
+    }
+    
+    func priceAbbreviated(priceDataPoint: OSRSItemPriceDataPoint?) -> String {
+        guard let price = priceDataPoint?.price else {
+            return ""
+        }
+        let wholePrice = price / 1000000
+        guard wholePrice >= 1 else {
+            return "\(price)gp"
+        }
+        let decimalPrice = (price % 1000000) / 100000
+        return "\(wholePrice).\(decimalPrice)M"
     }
     
     func getDistanceFromYAxis(at index: Int) -> Int {

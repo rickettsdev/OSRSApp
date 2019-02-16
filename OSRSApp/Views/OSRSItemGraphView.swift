@@ -18,6 +18,7 @@ private struct GraphConstants {
 public class OSRSItemGraphView: UIView {
     @IBOutlet weak var minPrice: UILabel!
     @IBOutlet weak var maxPrice: UILabel!
+    @IBOutlet weak var dates: UILabel!
     @IBOutlet weak var verticalAxis: UIView!
     
     @IBOutlet weak var horizontalAxis: UIView!
@@ -33,15 +34,17 @@ public class OSRSItemGraphView: UIView {
             return
         }
         
-        guard let maxPrice = self.graphViewModel?.highestAveragePrice?.price,
-            let cheapestPrice = self.graphViewModel?.cheapestAveragePrice?.price,
-            let itemCount = self.graphViewModel?.averageDataPointsByPrice.count
+        guard let maxPrice = self.graphViewModel?.getHighestPricePoint(),
+            let cheapestPrice = self.graphViewModel?.getCheapestPricePoint(),
+            let itemCount = self.graphViewModel?.averageDataPointsByPrice.count,
+            let dateRange = self.graphViewModel?.dateRange
             else {
                 return
         }
         
-        self.minPrice.text = "\(cheapestPrice)"
-        self.maxPrice.text = "\(maxPrice)"
+        self.minPrice.text = cheapestPrice
+        self.maxPrice.text = maxPrice
+        self.dates.text = "\(dateRange)"
         
 
         
@@ -53,7 +56,7 @@ public class OSRSItemGraphView: UIView {
             }
             addBarToGraph(xPosition: xPosition, height: height)
         }
-        
+
         self.layoutSubviews()
         self.setNeedsLayout()
         self.layoutIfNeeded()
@@ -76,5 +79,4 @@ public class OSRSItemGraphView: UIView {
         NSLayoutConstraint(item: bar, attribute: .leading, relatedBy: .equal, toItem: self.verticalAxis, attribute: .trailing, multiplier: 1, constant: xPosition).isActive = true
         NSLayoutConstraint(item: bar, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: barWidth).isActive = true
     }
-    
 }

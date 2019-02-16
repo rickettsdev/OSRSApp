@@ -38,13 +38,11 @@ public class OSRSItemPriceData {
 }
 
 public class OSRSItemPriceDataPoint {
-    var epoch: Date?
+    var epoch: String?
     var price: Int?
     
     public init(epoch: String?, price: Int?) {
-        if let epoch = epoch, let timeInterval: TimeInterval = Double(epoch) {
-             self.epoch = Date(timeIntervalSince1970: timeInterval)
-        }
+        self.epoch = epoch
         self.price = price
     }
 }
