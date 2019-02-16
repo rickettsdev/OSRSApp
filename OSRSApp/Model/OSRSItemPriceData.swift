@@ -13,6 +13,7 @@ public class OSRSItemPriceData {
     var priceDataPoints: [OSRSItemPriceDataPoint] = []
     var priceDataPointsAverage: [OSRSItemPriceDataPoint] = []
     
+    //TODO: Remove data manipulation from model
     public init(priceDataDictionary: [String:Any?]) {
         guard let dailyPrice = priceDataDictionary["daily"] as? [String:Int] else {
             return

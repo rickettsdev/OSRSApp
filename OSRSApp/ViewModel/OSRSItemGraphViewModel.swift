@@ -17,30 +17,30 @@ private struct GraphConstants {
 public class OSRSItemGraphViewModel: NSObject {
     private var itemPriceData: OSRSItemPriceData
     
-    lazy var averageDataPointsByPrice = {
-        return itemPriceData.priceDataPointsAverage.sorted { $0.price! < $1.price! }
+    lazy var dataPointsByPrice = {
+        return itemPriceData.priceDataPoints.sorted { $0.price! < $1.price! }
     }()
     
-    lazy var averageDataPointByDate = {
-        return self.itemPriceData.priceDataPointsAverage
+    lazy var dataPointByDate = {
+        return self.itemPriceData.priceDataPoints
     }()
     
-    lazy var cheapestAveragePrice: OSRSItemPriceDataPoint? = {
-        guard let cheapest = self.averageDataPointsByPrice.first else {
+    lazy var cheapestPrice: OSRSItemPriceDataPoint? = {
+        guard let cheapest = self.dataPointsByPrice.first else {
             return nil
         }
         return cheapest
     }()
     
-    lazy var highestAveragePrice: OSRSItemPriceDataPoint? = {
-        guard let highest = self.averageDataPointsByPrice.last else {
+    lazy var highestPrice: OSRSItemPriceDataPoint? = {
+        guard let highest = self.dataPointsByPrice.last else {
             return nil
         }
         return highest
     }()
     
     lazy var differenceInRange: Int? = {
-        guard let highest = self.highestAveragePrice?.price, let lowest = self.cheapestAveragePrice?.price else {
+        guard let highest = self.highestPrice?.price, let lowest = self.cheapestPrice?.price else {
             return nil
         }
        return (highest - lowest)
@@ -52,7 +52,7 @@ public class OSRSItemGraphViewModel: NSObject {
     
     
     lazy var dateRange: String = {
-        guard let earliest = self.averageDataPointByDate.first?.epoch, let latest = self.averageDataPointByDate.last?.epoch else {
+        guard let earliest = self.dataPointByDate.first?.epoch, let latest = self.dataPointByDate.last?.epoch else {
             return ""
         }
         guard let earliestTime = Double(earliest), let latestTime = Double(latest) else {
@@ -68,11 +68,11 @@ public class OSRSItemGraphViewModel: NSObject {
         return "\(earliestDateString) - \(latestDateString)"
     }()
     
-    func getAveragePriceBarHeight(for index: Int) -> Int? {
+    func getPriceBarHeight(for index: Int) -> Int? {
         
-        guard index < self.averageDataPointByDate.count,
-            let elementPrice = self.averageDataPointByDate[index].price,
-            let cheapest = self.cheapestAveragePrice?.price,
+        guard index < self.dataPointByDate.count,
+            let elementPrice = self.dataPointByDate[index].price,
+            let cheapest = self.cheapestPrice?.price,
             let differenceInRange = self.differenceInRange
             else {
             return nil
@@ -96,11 +96,11 @@ public class OSRSItemGraphViewModel: NSObject {
     }
     
     func getHighestPricePoint() -> String {
-        let highest = priceAbbreviated(priceDataPoint: self.highestAveragePrice)
+        let highest = priceAbbreviated(priceDataPoint: self.highestPrice)
         return highest
     }
     func getCheapestPricePoint() -> String {
-        let cheapest = priceAbbreviated(priceDataPoint: self.cheapestAveragePrice)
+        let cheapest = priceAbbreviated(priceDataPoint: self.cheapestPrice)
         return cheapest
     }
     
@@ -108,20 +108,21 @@ public class OSRSItemGraphViewModel: NSObject {
         guard let price = priceDataPoint?.price else {
             return ""
         }
-        let wholePrice = price / 1000000
-        guard wholePrice >= 1 else {
-            return "\(price)gp"
+        var wholePrice = price / 1000000
+        if wholePrice >= 1  {
+            let decimalPrice = (price % 1000000) / 100000
+            return "\(wholePrice).\(decimalPrice)M"
         }
-        let decimalPrice = (price % 1000000) / 100000
-        return "\(wholePrice).\(decimalPrice)M"
+        wholePrice = price / 1000
+        if wholePrice >= 1  {
+            let decimalPrice = (price % 1000) / 100
+            return "\(wholePrice).\(decimalPrice)K"
+        }
+       return "\(price)gp"
     }
     
     func getDistanceFromYAxis(at index: Int) -> Int {
         return GraphConstants.INITIAL_DISTANCE_FROM_X_AXIS + index * GraphConstants.BAR_WIDTH
-    }
-    // TODO: Implement this function.
-    func dataPointRunsOffGraph(at index: Int) -> Bool {
-        return false
     }
     
     public init(_ itemPriceData: OSRSItemPriceData) {

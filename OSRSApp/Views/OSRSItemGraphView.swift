@@ -36,7 +36,7 @@ public class OSRSItemGraphView: UIView {
         
         guard let maxPrice = self.graphViewModel?.getHighestPricePoint(),
             let cheapestPrice = self.graphViewModel?.getCheapestPricePoint(),
-            let itemCount = self.graphViewModel?.averageDataPointsByPrice.count,
+            let itemCount = self.graphViewModel?.dataPointsByPrice.count,
             let dateRange = self.graphViewModel?.dateRange
             else {
                 return
@@ -50,7 +50,7 @@ public class OSRSItemGraphView: UIView {
         
         for index in 0..<itemCount {
             guard let xPosition = self.graphViewModel?.getDistanceFromYAxis(at: index),
-                let height = self.graphViewModel?.getAveragePriceBarHeight(for: index)
+                let height = self.graphViewModel?.getPriceBarHeight(for: index)
                 else {
                     continue
             }
