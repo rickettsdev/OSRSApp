@@ -55,6 +55,16 @@ extension ViewController : ViewModelItemsReceived {
         self.removeLoadingCellIfNeeded()
         self.tableView?.reloadData()
     }
+    func newDataReceived(at indexPath: IndexPath, with data: Data?) {
+        guard let count = self.viewModel?.itemCount, indexPath.row < count else {
+            return
+        }
+        if let image = DataFormatter.dataToUIImage(data: data), let cellToUpdate = self.tableView.cellForRow(at: indexPath) {
+            cellToUpdate.imageView?.image = image
+            cellToUpdate.setNeedsLayout()
+            cellToUpdate.layoutIfNeeded()
+        }
+    }
     func prepareForNewSearchString() {
         DispatchQueue.main.async { [weak self] in
             self?.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
@@ -80,11 +90,6 @@ extension ViewController : ViewModelItemsReceived {
 }
 
 extension ViewController : OSRSViewModelUpdated {
-    func viewModelUpdated() {
-        DispatchQueue.main.async { [weak self] in
-            self?.tableView.reloadData()
-        }
-    }
     func presentedViewImageUpdated() {
         DispatchQueue.main.async { [weak self] in
             self?.presentedDetailView?.loadLargeIconImage()

@@ -30,8 +30,14 @@ extension ViewController : UITableViewDelegate, UITableViewDataSource {
         guard let itemCell = tableView.dequeueReusableCell(withIdentifier: CellNibNames.OSRSItemCell, for: indexPath) as? OSRSItemCell else {
             return UITableViewCell()
         }
-        itemCell.imageView?.image = nil
+        
         itemCell.viewModel = viewModel?.osrsItemViewModelList?[indexPath.row]
+        
+        if let image = DataFormatter.dataToUIImage(data: itemCell.viewModel?.smallIcon) {
+            itemCell.imageView?.image = image
+        } else {
+            self.viewModel?.fetchSmallIconData(indexPath: indexPath, smallIconURL: itemCell.viewModel?.item?.smallIconURL)
+        }
         
         return itemCell
     }

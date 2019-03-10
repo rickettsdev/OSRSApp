@@ -10,7 +10,6 @@ import Foundation
 
 // Meant to be implemented by the tableviewcell
 protocol OSRSViewModelUpdated: class {
-    func viewModelUpdated()
     func presentedViewImageUpdated()
     func itemPriceDataReceived(for id: Int?)
 }
@@ -43,24 +42,7 @@ public class OSRSItemViewModel: NSObject {
         }
     }
     
-    var smallIconNeedsUpdate: Bool = true
-    
-    private var _smallIcon: Data? {
-        didSet {
-            print("test: \(self.item?.name ?? "")")
-            self.delegate?.viewModelUpdated()
-        }
-    }
-    var smallIcon: Data? {
-        get {
-            guard _smallIcon != nil && self.smallIconNeedsUpdate == false else {
-                self.smallIconNeedsUpdate = false
-                getSmallIconData()
-                return nil
-            }
-            return _smallIcon
-        }
-    }
+    var smallIcon: Data?
     
     var largeIconNeedsUpdate: Bool = true
     private var _largeIcon: Data? {
@@ -84,18 +66,6 @@ public class OSRSItemViewModel: NSObject {
         self.item = item
     }
     
-    private func getSmallIconData() {
-        guard let url = item?.smallIconURL else {
-            return
-        }
-        DataManager.callService(with: url, completion: { [weak self] (data) in
-            guard let data = data else {
-                self?.smallIconNeedsUpdate = true
-                return
-            }
-            self?._smallIcon = data
-        })
-    }
     private func getLargeIconData() {
         guard let url = item?.largeIconURL else {
             return
@@ -125,6 +95,7 @@ public class OSRSItemViewModel: NSObject {
 //meant to be implemented by viewcontroller
 public protocol ViewModelItemsReceived: class {
     func osrsItemsReceived()
+    func newDataReceived(at indexPath: IndexPath, with data: Data?)
     func prepareForNewSearchString()
     func prepareForAdditionalItems()
     func itemsWereNotReceived()
@@ -169,6 +140,7 @@ public class ViewModel: NSObject {
             }
         }
     }
+    
     var osrsItemViewModelList: [OSRSItemViewModel]? {
         didSet {
             DispatchQueue.main.async { [weak self] in
@@ -181,6 +153,19 @@ public class ViewModel: NSObject {
     public init(using delegate: ViewModelItemsReceived) {
         super.init()
         self.delegate = delegate
+    }
+    
+    public func fetchSmallIconData(indexPath: IndexPath, smallIconURL: URL?) {
+        DataManager.getSmallIconData(url: smallIconURL, onCompletion: { [weak self, indexPath] (data) in
+            DispatchQueue.main.async {
+                //TODO: Should add check to see if same query string
+                guard indexPath.row < self?.itemCount ?? 0 else {
+                    return
+                }
+                self?.osrsItemViewModelList?[indexPath.row].smallIcon = data
+                self?.delegate?.newDataReceived(at: indexPath, with: data)
+            }
+        })
     }
     
     public func searchForItems(searchString: String?) {

@@ -34,6 +34,20 @@ public class DataManager {
             completion(itemModelList)
         })
     }
+    class func getSmallIconData(url: URL?, onCompletion: @escaping (Data?) -> () = {(_) in}) {
+        DispatchQueue.global(qos: .userInitiated).async {
+            guard let url = url else {
+                return
+            }
+            DataManager.callService(with: url, completion: { (data) in
+                guard let data = data else {
+                    onCompletion(nil)
+                    return
+                }
+                onCompletion(data)
+            })
+        }
+    }
     
     class func getGraphData(for itemID: Int, completion: @escaping (OSRSItemPriceData?)->()) {
         let urlString = "http://services.runescape.com/m=itemdb_oldschool/api/graph/\(itemID).json"
