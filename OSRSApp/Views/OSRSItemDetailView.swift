@@ -13,9 +13,9 @@ class OSRSItemDetailView: UIView {
     @IBOutlet weak var itemImageView: UIImageView!
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var itemDescription: UILabel!
-    @IBOutlet weak var priceTrend: UILabel!
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var graphView: UIView!
+    @IBOutlet weak var currentDataTableView: UITableView!
     
     var itemViewModel: OSRSItemViewModel? {
         didSet {
@@ -39,6 +39,9 @@ class OSRSItemDetailView: UIView {
     
     func setup() {
         
+        self.currentDataTableView.delegate = self
+        self.currentDataTableView.dataSource = self
+        
         self.cancelButton.setTitle("Back", for: .normal)
         self.cancelButton.setTitleColor(.red, for: .normal)
         self.cancelButton.addTarget(self, action: #selector(cancelAction), for: .touchUpInside)
@@ -53,10 +56,10 @@ class OSRSItemDetailView: UIView {
         if let description = itemViewModel?.item?.itemDescription {
             self.itemDescription.text = description
         }
-        if let trend = itemViewModel?.item?.current?.trend?.rawValue {
-            self.priceTrend.text = trend
-        }
+
         self.createGraphIfPossible()
+        
+        self.currentDataTableView.reloadData()
     }
     func createGraphIfPossible() {
         DispatchQueue.main.async { [unowned self] in
@@ -93,4 +96,26 @@ class OSRSItemDetailView: UIView {
         self.removeFromSuperview()
     }
     
+}
+
+extension OSRSItemDetailView: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.itemViewModel?.currentDataContentCount() ?? 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell(style: .value1, reuseIdentifier: "cell")
+        cell.textLabel?.text = self.itemViewModel?.getCurrentData(label: .primary, for: indexPath.row)
+        cell.detailTextLabel?.text = self.itemViewModel?.getCurrentData(label: .secondary, for: indexPath.row)
+        return cell
+    }
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let title = self.itemViewModel?.getCurrentDataHeader()
+        return title
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.setNeedsLayout()
+        cell.layoutIfNeeded()
+    }
 }

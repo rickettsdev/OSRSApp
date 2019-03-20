@@ -100,6 +100,11 @@ class ItemPrice: ItemValue {
     var price: String?
     public init(dataDictionay: [String:Any?]){
         super.init(dataDictionary: dataDictionay)
+        guard let price = dataDictionay["price"] as? Int else {
+            self.price = dataDictionay["price"] as? String
+            return
+        }
+        self.price = String(price)
     }
 }
 

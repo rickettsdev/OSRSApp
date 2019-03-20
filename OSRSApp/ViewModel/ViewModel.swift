@@ -19,6 +19,11 @@ enum ReloadCellState: Int {
     case inactive
 }
 
+enum CurrentDataContent {
+    case primary
+    case secondary
+}
+
 public class OSRSItemViewModel: NSObject {
     var item: OSRSItem?
     weak var delegate: OSRSViewModelUpdated?
@@ -64,6 +69,41 @@ public class OSRSItemViewModel: NSObject {
     
     public init(item: OSRSItem) {
         self.item = item
+    }
+    
+    func getCurrentDataHeader() -> String {
+        return "Current Statistics"
+    }
+
+    func getCurrentData(label type: CurrentDataContent ,for row: Int) -> String {
+        switch row {
+        case 0:
+            guard type == .secondary else {
+                return "Price"
+            }
+            let currentPrice = item?.current?.price ?? ""
+            return "\(currentPrice)"
+        case 1:
+            guard type == .secondary else {
+                return "Trend"
+            }
+            let currentTrend = item?.current?.trend?.rawValue ?? ""
+            return currentTrend
+        case 2:
+            return ""
+        case 3:
+            return ""
+        case 4:
+            return ""
+        case 5:
+            return ""
+        default:()
+        }
+        return ""
+    }
+    
+    func currentDataContentCount() -> Int {
+        return 2
     }
     
     private func getLargeIconData() {
